@@ -7,18 +7,9 @@ router.get('/', function(req, res) {
   res.json('This is the root of the api.');
 });
 
-// router.post('/login', function(req, res) {
-//   console.log('in /login');
-//   console.log('REQ.BODY', req.body)
-
-//   // res.redirect('../members');
-// });
-
 router.post('/login', passport.authenticate('local'), function(req, res) {
   console.log('/LOGIN SUCCESSFULLY AUTHED');
   console.log('REQ.BODY', req.body)
-  // res.json('/members');
-
   res.redirect('../members');
 });
 

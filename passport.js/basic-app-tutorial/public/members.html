@@ -10,5 +10,19 @@
   <body>
     <h1>Members Page</h1>
     <form action="api/logout"><button type="submit">Log Out</button></form>
+    <div id="user-data"></div>
+
+    <script>
+      console.log('script connected');
+      let userDataDiv = document.getElementById('user-data');
+      fetch('./api/user_data')
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          let { email, id } = data;
+
+          userDataDiv.append(`Email: ${email} Id: ${id}`);
+        });
+    </script>
   </body>
 </html>

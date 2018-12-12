@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Sign up</title>
+    <title>Auth</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <h1>Sign up</h1>
+    <h2>Sign up</h2>
     <form action="./api/signup" method="POST" class="form-example">
       <div class="form-example">
         <label for="email">Email: </label>
@@ -19,5 +19,20 @@
       </div>
       <div class=""><button type="submit">Submit</button></div>
     </form>
+
+    <h2>Login</h2>
+    <form action="./api/login" method="POST" class="form-example">
+      <div class="form-example">
+        <label for="email">Email: </label>
+        <input type="email" name="email" id="email" required />
+      </div>
+      <div class="form-example">
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" required />
+      </div>
+      <div class=""><button type="submit">Submit</button></div>
+    </form>
+
+
   </body>
 </html>

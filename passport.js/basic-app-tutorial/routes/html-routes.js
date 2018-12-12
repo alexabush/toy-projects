@@ -4,19 +4,11 @@ var path = require('path');
 
 var isAuthenticated = require('../server/config/middleware/isAuthenticated');
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   if (req.user) {
     res.redirect('/members');
   }
-  res.sendFile(path.join(__dirname, '../public/signup.html'));
-});
-
-router.get('/login', function (req, res) {
-  if (req.user) {
-    res.redirect('/members');
-  }
-  res.sendFile(path.join(__dirname, '../public/login.html'));
+  res.sendFile(path.join(__dirname, '../public/auth.html'));
 });
 
 router.get('/members', isAuthenticated, function (req, res) {

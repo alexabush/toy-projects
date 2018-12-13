@@ -1,6 +1,12 @@
 import React, { PureComponent, Component } from 'react';
 import './App.css';
-import { Col, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import {
+  Col,
+  Form,
+  FormGroup,
+  FormControl,
+  ControlLabel
+} from 'react-bootstrap';
 
 class App extends Component {
   componentDidMount() {
@@ -15,8 +21,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <UsernamePasswordForm endpoint='./login' displayName='Log In' />
-        <UsernamePasswordForm endpoint='./signup' displayName='Sign Up' />
+        <UsernamePasswordForm endpoint="./login" displayName="Log In" />
+        <UsernamePasswordForm endpoint="./signup" displayName="Sign Up" />
       </div>
     );
   }
@@ -29,8 +35,8 @@ class UsernamePasswordForm extends PureComponent {
   };
 
   onChange = e => {
-    let { inputName, value } = e.target;
-    this.setState({ [inputName]: value });
+    let { name, value } = e.target;
+    this.setState({ [name]: value });
   };
 
   resetState = () => {
@@ -42,7 +48,6 @@ class UsernamePasswordForm extends PureComponent {
 
   onSubmit = e => {
     e.preventDefault();
-    // this.props.endpoint
     fetch(`/${this.props.endpoint}`, {
       method: 'POST',
       headers: {
@@ -63,8 +68,9 @@ class UsernamePasswordForm extends PureComponent {
       <div className="username-password-form">
         <h2>{this.props.displayName}</h2>
         <Form horizontal onSubmit={this.onSubmit}>
-          <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>Username:
+          <FormGroup controlId="username">
+            <Col componentClass={ControlLabel} sm={2}>
+              Username:
             </Col>
             <Col sm={12}>
               <FormControl
@@ -72,11 +78,12 @@ class UsernamePasswordForm extends PureComponent {
                 value={this.state.username}
                 name="username"
                 onChange={this.onChange}
-                />
+              />
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col componentClass={ControlLabel} sm={2}>Password:
+            <Col componentClass={ControlLabel} sm={2}>
+              Password:
             </Col>
             <Col sm={12}>
               <FormControl

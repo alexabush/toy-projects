@@ -5,14 +5,18 @@ var passport = require('../config/passport');
 
 /* GET home page. */
 router.get('/auth', function(req, res, next) {
-  console.log('in / handler')
+  console.log('in / handler');
   res.json({ message: 'hi' });
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
-  console.log('/LOGIN SUCCESSFULLY AUTHED');
-  res.json({ user:req.user })
-});
+router.post(
+  '/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    console.log('/LOGIN SUCCESSFULLY AUTHED');
+    res.json({ user: req.user });
+  }
+);
 
 router.post('/signup', function(req, res) {
   console.log(req.body);
@@ -34,7 +38,7 @@ router.post('/signup', function(req, res) {
 router.get('/logout', function(req, res) {
   req.logout();
   console.log('LOGGING OUT');
-  res.json({})
+  res.json({});
 });
 
 module.exports = router;

@@ -3,6 +3,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var flash = require('connect-flash');
 
 var passport = require('./config/passport');
 var index = require('./routes/index');
@@ -15,9 +16,10 @@ app.use(cookieParser());
 
 app.use(
   session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(flash());
 
 app.use('/api', index);
 
@@ -40,6 +42,6 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: err
   });
-})
+});
 
 module.exports = app;

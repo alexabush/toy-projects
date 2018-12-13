@@ -22,7 +22,7 @@ passport.use(new LocalStrategy(
           message: "Incorrect password."
         });
       }
-      return done(null, dbUser);
+      return done(null, dbUser, {message: "Successfully logged in"});
     });
   }
 ));

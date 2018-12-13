@@ -7,11 +7,38 @@ import {
   FormControl,
   ControlLabel
 } from 'react-bootstrap';
+import _ from 'lodash'
 
 class App extends Component {
+  state = { user: {} };
+
+  componentDidMount() {
+    let user = JSON.parse(localStorage.getItem('user')) || {};
+    this.setState({ user });
+  }
+
+  render() {
+    if (_.isEmpty(this.state.user)) {
+      return <Auth />;
+    }
+    return (
+      <MainApp />
+    )
+  }
+}
+
+class MainApp extends PureComponent {
   render() {
     return (
-      <div className="App">
+      <div>Hi</div>
+    )
+  }
+}
+
+class Auth extends PureComponent {
+  render() {
+    return (
+      <div className="Auth">
         <UsernamePasswordForm endpoint="./login" displayName="Log In" />
         <UsernamePasswordForm endpoint="./signup" displayName="Sign Up" />
       </div>
@@ -50,7 +77,8 @@ class UsernamePasswordForm extends PureComponent {
       .then(res => res.json())
       .then(data => {
         console.log('got response from submission');
-        console.log(data)
+        console.log(data);
+        localStorage.setItem('user', JSON.stringify(data));
         this.resetState();
       });
   };

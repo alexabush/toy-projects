@@ -12,6 +12,30 @@ import _ from 'lodash';
 class App extends Component {
   state = { user: {} };
 
+  componentDidMount() {
+    let user = JSON.parse(localStorage.getItem('user')) || {};
+    this.setState({ user });
+  }
+
+  handleFormSubmission = (e, endpoint, submissionData) => {
+    e.preventDefault();
+    fetch(`/api/${endpoint}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(submissionData)
+    })
+      .then(res => res.json())
+      .then(({ user }) => {
+        console.log('got response from submission');
+        console.log(user);
+        localStorage.setItem('user', JSON.stringify(user));
+        this.setState({ user });
+      });
+  };
+
   handleLogout = e => {
     e.preventDefault();
     fetch('/api/logout')
@@ -23,15 +47,10 @@ class App extends Component {
       });
   };
 
-  componentDidMount() {
-    let user = JSON.parse(localStorage.getItem('user')).user || {};
-    this.setState({ user });
-  }
-
   render() {
-    console.log('App')
+    console.log('App');
     if (_.isEmpty(this.state.user)) {
-      return <Auth />;
+      return <Auth handleFormSubmission={this.handleFormSubmission} />;
     }
     return <MainApp user={this.state.user} handleLogout={this.handleLogout} />;
   }
@@ -56,8 +75,16 @@ class Auth extends PureComponent {
   render() {
     return (
       <div className="Auth">
-        <UsernamePasswordForm endpoint="./login" displayName="Log In" />
-        <UsernamePasswordForm endpoint="./signup" displayName="Sign Up" />
+        <UsernamePasswordForm
+          handleFormSubmission={this.props.handleFormSubmission}
+          endpoint="./login"
+          displayName="Log In"
+        />
+        <UsernamePasswordForm
+          handleFormSubmission={this.props.handleFormSubmission}
+          endpoint="./signup"
+          displayName="Sign Up"
+        />
       </div>
     );
   }
@@ -82,22 +109,8 @@ class UsernamePasswordForm extends PureComponent {
   };
 
   onSubmit = e => {
-    e.preventDefault();
-    fetch(`/api/${this.props.endpoint}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state)
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log('got response from submission');
-        console.log(data);
-        localStorage.setItem('user', JSON.stringify(data));
-        this.resetState();
-      });
+    this.props.handleFormSubmission(e, this.props.endpoint, this.state);
+    this.resetState();
   };
 
   render() {

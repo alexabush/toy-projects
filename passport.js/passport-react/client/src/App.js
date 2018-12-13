@@ -9,15 +9,6 @@ import {
 } from 'react-bootstrap';
 
 class App extends Component {
-  componentDidMount() {
-    console.log('connected');
-    fetch('/auth')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-      });
-  }
-
   render() {
     return (
       <div className="App">
@@ -48,7 +39,7 @@ class UsernamePasswordForm extends PureComponent {
 
   onSubmit = e => {
     e.preventDefault();
-    fetch(`/${this.props.endpoint}`, {
+    fetch(`/api/${this.props.endpoint}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -59,6 +50,7 @@ class UsernamePasswordForm extends PureComponent {
       .then(res => res.json())
       .then(data => {
         console.log('got response from submission');
+        console.log(data)
         this.resetState();
       });
   };
@@ -81,7 +73,7 @@ class UsernamePasswordForm extends PureComponent {
               />
             </Col>
           </FormGroup>
-          <FormGroup>
+          <FormGroup controlId="password">
             <Col componentClass={ControlLabel} sm={2}>
               Password:
             </Col>

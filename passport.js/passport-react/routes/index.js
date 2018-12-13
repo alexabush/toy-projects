@@ -11,8 +11,7 @@ router.get('/auth', function(req, res, next) {
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
   console.log('/LOGIN SUCCESSFULLY AUTHED');
-  console.log('REQ.BODY', req.body);
-  res.redirect('../members');
+  res.json({user:req.user})
 });
 
 router.post('/signup', function(req, res) {

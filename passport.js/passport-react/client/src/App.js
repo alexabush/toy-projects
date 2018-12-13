@@ -7,31 +7,48 @@ import {
   FormControl,
   ControlLabel
 } from 'react-bootstrap';
-import _ from 'lodash'
+import _ from 'lodash';
 
 class App extends Component {
   state = { user: {} };
 
+  handleLogout = e => {
+    e.preventDefault();
+    fetch('/api/logout')
+      .then(res => res.json())
+      .then(data => {
+        console.log('logging out');
+        localStorage.removeItem('user');
+        this.setState({ user: {} });
+      });
+  };
+
   componentDidMount() {
-    let user = JSON.parse(localStorage.getItem('user')) || {};
+    let user = JSON.parse(localStorage.getItem('user')).user || {};
     this.setState({ user });
   }
 
   render() {
+    console.log('App')
     if (_.isEmpty(this.state.user)) {
       return <Auth />;
     }
-    return (
-      <MainApp />
-    )
+    return <MainApp user={this.state.user} handleLogout={this.handleLogout} />;
   }
 }
 
 class MainApp extends PureComponent {
   render() {
+    console.log('MainApp');
+    let { username } = this.props.user;
     return (
-      <div>Hi</div>
-    )
+      <div>
+        <h1>{`Hi ${username}`}</h1>
+        <form onSubmit={this.props.handleLogout}>
+          <button type="submit">Log Out</button>
+        </form>
+      </div>
+    );
   }
 }
 

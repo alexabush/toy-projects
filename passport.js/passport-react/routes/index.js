@@ -32,9 +32,9 @@ router.post('/signup', function(req, res) {
 });
 
 router.get('/logout', function(req, res) {
-  console.log('LOGGING OUT');
   req.logout();
-  res.redirect('/');
+  console.log('LOGGING OUT');
+  res.json({})
 });
 
 module.exports = router;

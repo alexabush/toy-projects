@@ -1,27 +1,11 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Add from './Add';
+import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Add from './Add'
 
-const About = () => Greeting();
-const About = () => Greeting();
+const Index = () => <h2>Home</h2>;
+const About = () => <h2>About</h2>;
 const Users = () => <h2>Users</h2>;
 const Math = () => <h2>Math</h2>;
-
-function Greeting(props) {
-  const isLoggedIn = props.isLoggedIn;
-  if (isLoggedIn) {
-    return <UserGreeting />;
-  }
-  return <GuestGreeting />;
-}
-
-function UserGreeting(props) {
-  return <h1>Welcome back!</h1>;
-};
-
-function GuestGreeting(props) {
-  return <h1>Please sign up.</h1>;
-}
 
 const AppRouter = () => (
   <Router>
